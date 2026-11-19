@@ -16,12 +16,12 @@ pipeline {
     }
     stage('Image gate') {
       steps {
-        sh 'trivy image --pkg-types library --severity HIGH,CRITICAL --ignore-unfixed --skip-dirs /usr/local/lib/node_modules --exit-code 1 $IMAGE:$BUILD_NUMBER'
+        sh 'trivy image --skip-db-update --pkg-types library --severity HIGH,CRITICAL --ignore-unfixed --skip-dirs /usr/local/lib/node_modules --exit-code 1 $IMAGE:$BUILD_NUMBER'
       }
     }
     stage('OS report') {
       steps {
-        sh 'trivy image --pkg-types os --severity CRITICAL --ignore-unfixed $IMAGE:$BUILD_NUMBER'
+        sh 'trivy image --skip-db-update --pkg-types os --severity CRITICAL --ignore-unfixed $IMAGE:$BUILD_NUMBER'
       }
     }
   }
